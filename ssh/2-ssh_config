@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# This script will config the ssh and will make sure the authentication uses the name of the private instead of password
+Host *
+    IdentityFile ~/.ssh/school
+    PasswordAuthentication no			
