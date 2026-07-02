@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# This script creates ssh keys names them 'school' and assigns the passphrase 'betty'
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/school
+
+# The terminal will prompt you enter the passphrase,
+# Type 'betty' then hit enter
