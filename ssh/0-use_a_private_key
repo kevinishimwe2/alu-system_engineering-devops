@@ -1,2 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+#This bash file helps you connect to your ssh server
 ssh -i ~/.ssh/school ubuntu@your_server_ip
