@@ -7,19 +7,15 @@ apt-get update -y
 apt-get install -y nginx
 
 mkdir -p /var/www/html
-echo "Holberton School" > /var/www/html/index.nginx-debian.html
 echo "Holberton School" > /var/www/html/index.html
+echo "Holberton School" > /var/www/html/index.nginx-debian.html
 
-# Open port 80 if a firewall is active
-if command -v ufw >/dev/null 2>&1; then
-	ufw allow 80/tcp || true
-fi
+# Stop any existing nginx process cleanly before restarting
+pkill nginx 2>/dev/null
+sleep 1
 
-# Make sure nginx is running now, and will be after reboot
 if command -v service >/dev/null 2>&1; then
-	service nginx start || service nginx restart || true
+	service nginx start
+else
+	/usr/sbin/nginx
 fi
-update-rc.d nginx defaults 2>/dev/null || true
-
-/usr/sbin/nginx -t 2>&1 || true
-pgrep nginx >/dev/null || /usr/sbin/nginx
