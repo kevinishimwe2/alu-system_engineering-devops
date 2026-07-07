@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#Installing nginx
+
+sudo apt update
+sudo apt install nginx
+
+echo "Holberton School for the win!" > /var/www/html/index.nginx-debian.html
+
+sudo service nginx start
+sudo service nginx restart
