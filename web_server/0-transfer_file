@@ -11,4 +11,7 @@ IP="$2"
 USERNAME="$3"
 SSH_KEY="$4"
 
-scp -o ScriptHostKeyChecking=no -i "$SSH_KEY" "$FILE_PATH""$USERNAME@$IP":~/
+scp -i "$SSH_KEY" \
+    -o StrictHostKeyChecking=no \
+    -o userKnownHostsFile=/dev/null \
+    "$FILE_PATH" "$USERNAME@$IP":~/
