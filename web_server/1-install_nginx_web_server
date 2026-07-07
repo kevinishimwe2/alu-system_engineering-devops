@@ -1,10 +1,20 @@
 #!/usr/bin/env bash
-#Installing nginx
+# Installs and configures nginx to serve a page containing "Holberton School"
 
-sudo apt update
-sudo apt install nginx
+set -e
 
-echo "Holberton School for the win!" > /var/www/html/index.nginx-debian.html
+export DEBIAN_FRONTEND=noninteractive
 
-sudo service nginx start
-sudo service nginx restart
+apt-get update -y
+apt-get install -y nginx
+
+mkdir -p /var/www/html
+
+echo "Holberton School" > /var/www/html/index.nginx-debian.html
+echo "Holberton School" > /var/www/html/index.html
+
+if command -v service >/dev/null 2>&1; then
+	service nginx start || service nginx restart
+else
+	/usr/sbin/nginx || /usr/sbin/nginx -s reload
+fi
