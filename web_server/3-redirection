@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Configures nginx with a 301 redirect from /redirect_me to a target URL
+apt-get update -y
+apt-get install -y nginx
+
+echo "Holberton School" > /var/www/html/index.nginx-debian.html
+
+sed -i '/^\tlocation \/ {/i\\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\t}\n' /etc/nginx/sites-available/default
+
+service nginx start
