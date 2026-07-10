@@ -1,42 +1,8 @@
 #!/usr/bin/env bash
-# This script installs Nginx on an Ubuntu machine, configures it to listen
-# on port 80, and ensures the root page contains "Holberton School".
-
-# 1. Wait for any background apt-get / dpkg locks to release (avoids install errors)
-while fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
-    sleep 2
-done
-
-while fuser /var/lib/dpkg/lock >/dev/null 2>&1; do
-    sleep 2
-done
-
-# 2. Stop and purge Apache if it exists (highly common port 80 conflict in ALX/Holberton)
-if service apache2 status >/dev/null 2>&1; then
-    service apache2 stop || true
-fi
-if command -v apache2 >/dev/null; then
-    apt-get purge -y apache2 || true
-    apt-get autoremove -y || true
-fi
-
-# 3. Forcefully kill any other processes currently occupying port 80
-if command -v fuser >/dev/null; then
-    fuser -k 80/tcp || true
-fi
-
-# 4. Update packages and install Nginx
-apt-get update
+# Installs and configures nginx to serve a page containing "Holberton School"
+apt-get update -y
 apt-get install -y nginx
 
-# 5. Create the index files with the expected text
-mkdir -p /var/www/html
-echo "Holberton School for the win!" | tee /var/www/html/index.html /var/www/html/index.nginx-debian.html
+echo "Holberton School" > /var/www/html/index.nginx-debian.html
 
-# 6. Allow Nginx traffic through the firewall if UFW is active
-if command -v ufw >/dev/null; then
-    ufw allow 'Nginx HTTP'
-fi
-
-# 7. Start or restart Nginx using multiple fallback methods
-service nginx restart || /etc/init.d/nginx restart || nginx -s reload || nginx
+service nginx start
